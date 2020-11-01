@@ -12,7 +12,7 @@ class Solution{
 
     static void dfs(int x, int y){
         vis[x][y]=1;
-        System.out.println(x+" "+y);
+        
         for(int i=0;i<4;i++){
             if(isValid(x+dx[i], y+dy[i])){
                 dfs(x+dx[i], y+dy[i]);
@@ -24,7 +24,7 @@ class Solution{
         int n=g.length;
         if(x<0 || x>=n || y<0 || y>=n) return false;
 
-        if(vis[x][y]==1) return false;
+        if(vis[x][y]==1 || g[x][y]==0) return false;
 
         return true;
     }
@@ -32,7 +32,19 @@ class Solution{
 	public static void main(String[] args){
         int n=sc.nextInt(), m=sc.nextInt();
         g=new int[n][m]; vis=new int[n][m];
-        dfs(0, 0);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++) g[i][j]=sc.nextInt();
+        }
+        int connected_components=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(vis[i][j]==0 && g[i][j]==1){
+                    connected_components++;
+                    dfs(i, j);
+                }
+            }
+        }
+        System.out.println(connected_components);
   }
   static class FastReader 
     { 
@@ -91,3 +103,11 @@ class Solution{
         } 
     }
 }
+/*
+0 0 1 0 1 1
+0 1 1 0 0 1
+0 1 0 0 0 0
+1 0 1 1 0 0
+0 0 0 1 0 0
+0 1 1 0 1 1
+*/
