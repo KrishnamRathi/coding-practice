@@ -5,39 +5,34 @@ import java.io.*;
 class Solution{
     static FastReader sc=new FastReader();
     static PrintWriter writer=new PrintWriter(System.out);
-	static ArrayList<Integer>[] g;
-	static int[] vis, in ;
-    static ArrayList<Integer> ans;
+    static int[][] g, vis;
 
-    static void kanh(int n){
-        Queue<Integer> q=new LinkedList<Integer>();
-        for(int i=1;i<=n;i++){
-            if(in[i]==0) q.offer(i);
-        }
-        while(q.size()!=0){
-            int curr = q.poll();
-            ans.add(curr);
-            for(int x: g[curr]){
-                in[x]--;
-                if(in[x]==0) q.offer(x);
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, 1, 0, -1};
+
+    static void dfs(int x, int y){
+        vis[x][y]=1;
+        System.out.println(x+" "+y);
+        for(int i=0;i<4;i++){
+            if(isValid(x+dx[i], y+dy[i])){
+                dfs(x+dx[i], y+dy[i]);
             }
         }
     }
-	
+
+    static boolean isValid(int x, int y){
+        int n=g.length;
+        if(x<0 || x>=n || y<0 || y>=n) return false;
+
+        if(vis[x][y]==1) return false;
+
+        return true;
+    }
+    
 	public static void main(String[] args){
-		int n=sc.nextInt(), m=sc.nextInt();
-        g=new ArrayList[n+1];
-        vis=new int[n+1]; in=new int[n+1];
-        for(int i=0;i<=n;i++) g[i]=new ArrayList<>();
-        ans=new ArrayList<>();
-        for(int i=0;i<m;i++) {
-            int u=sc.nextInt(), v=sc.nextInt();
-            g[u].add(v);
-            in[v]++;
-        }
-        kanh(n);
-        if(ans.size()!=n) System.out.println("Sandro fails.");
-        else for(int x: ans) System.out.print(x+" ");
+        int n=sc.nextInt(), m=sc.nextInt();
+        g=new int[n][m]; vis=new int[n][m];
+        dfs(0, 0);
   }
   static class FastReader 
     { 
