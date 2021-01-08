@@ -24,7 +24,7 @@ class LCA {
 		int t=1;
 		while(t-->0) {
 			int n=sc.nextInt(), m=sc.nextInt();
-			int MAX_N=(int)Math.log(n);
+			int MAX_N=(int)(Math.log(n)/Math.log(2));
 			g=new ArrayList[n+1];
 			h=new int[n+1];
 			LCA=new int[n+1][MAX_N];
