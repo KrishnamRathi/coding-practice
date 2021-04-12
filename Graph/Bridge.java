@@ -15,12 +15,13 @@ class Solution{
 		for(int x: g[node]) {
 			if(x==par) continue;
 			
-			if(vis[x]==1) low[node] = Math.min(low[node], in[x]); // backedge
+			if(vis[x]==1) low[node] = Math.min(low[node], in[x]); // backedge, therefore minimising the low time with its intime 
 			else {
 				dfs(x, node);
 				
-				if(low[x]>in[node]) {
-					f=1; // edge x - node is a bridge
+				if(low[x]>in[node]) {                            // if low time of child < intime of its par or 
+                                                                 // if the child can reach an node whose intime is less than the intime of child's parent.
+					f=1;                                         // edge x - node is a bridge
 				}
 				low[node] = Math.min(low[node], low[x]);
 			}

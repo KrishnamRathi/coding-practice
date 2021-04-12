@@ -8,6 +8,8 @@ class Solution{
 	static int cnt=0;
 	static Set<Integer> hs;
 	
+    //Application of bridge so first revise that..
+
 	static void dfs(int node, int par) {
 		vis[node]=1;
 		in[node]=cnt; low[node]=cnt++;
@@ -16,18 +18,17 @@ class Solution{
 		for(int x: g[node]) {
 			if(x==par) continue;
 			
-			if(vis[x]==1) low[node]=Math.min(low[node], in[x]);
+			if(vis[x]==1) low[node]=Math.min(low[node], in[x]);  // backedge, therefore minimising its low time with already visited node;
 			else {
-				dfs(x, node);
-				if(low[x]>=in[node] && par!=-1) {
+				dfs(x, node); 
+				if(low[x]>=in[node] && par!=-1) {   // a node is a articulation point when its a part of bridge except when it is root of the graph;
 					hs.add(node);
 				}
 				if(par==-1) par_child++;
 				low[node]=Math.min(low[node], low[x]);
 			}
 		}
-		if(par_child>1 && par==-1) hs.add(node);
-		
+		if(par_child>1 && par==-1) hs.add(node);   // when the node is root of the graph, a bridge does not always has articulation pt;	
 	}
 	
 	public static void main(String[] args){
